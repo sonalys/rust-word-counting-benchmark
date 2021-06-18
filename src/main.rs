@@ -1,10 +1,13 @@
 use std::collections::BTreeMap;
+use std::env;
 use std::fs::File;
 use std::io::prelude::*;
 use std::time::SystemTime;
 
 fn main() {
-    let mut f = File::open("dict.txt").unwrap();
+    let args: Vec<String> = env::args().collect();
+    let path = args.get(1).unwrap();
+    let mut f = File::open(path).unwrap();
     let mut buffer = String::new();
 
     // Read entire file to buffer.
