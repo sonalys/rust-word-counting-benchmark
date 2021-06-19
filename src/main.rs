@@ -1,4 +1,5 @@
 use std::collections::BTreeMap;
+use std::collections::HashMap;
 use std::env;
 use std::fs::File;
 use std::io::prelude::*;
@@ -22,24 +23,19 @@ fn main() {
     println!("Text has {} words in total", words.len());
 
     // Runs each algorithm and compares run time.
-    [algorithm0, algorithm1]
+    [algorithm0, algorithm1, algorithm2]
         .iter()
         .enumerate()
         .for_each(|(index, algorithm)| {
             let start = SystemTime::now();
-            let res = algorithm(&words);
+            algorithm(&words);
             let time_spent = SystemTime::now().duration_since(start).unwrap();
 
-            println!(
-                "Algorithm {} spent {:?}μs. Found {} different words",
-                index,
-                time_spent.as_micros(),
-                res.len()
-            );
+            println!("Algorithm {} spent {:?}μs.", index, time_spent.as_micros(),);
         });
 }
 
-fn algorithm0(ref words: &Vec<String>) -> BTreeMap<&String, usize> {
+fn algorithm0(ref words: &Vec<String>) {
     let mut map = BTreeMap::new();
     for word in *words {
         match map.get_mut(word) {
@@ -51,15 +47,18 @@ fn algorithm0(ref words: &Vec<String>) -> BTreeMap<&String, usize> {
             }
         }
     }
-
-    map
 }
 
-fn algorithm1(ref words: &Vec<String>) -> BTreeMap<&String, usize> {
+fn algorithm1(ref words: &Vec<String>) {
     let mut map = BTreeMap::new();
     for word in *words {
         *map.entry(word).or_insert(0usize) += 1;
     }
+}
 
-    map
+fn algorithm2(ref words: &Vec<String>) {
+    let mut map = HashMap::new();
+    for word in *words {
+        *map.entry(word).or_insert(0usize) += 1;
+    }
 }
