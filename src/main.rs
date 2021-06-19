@@ -35,6 +35,7 @@ fn main() {
         });
 }
 
+// Slowest 34ms 83k words
 fn algorithm0(ref words: &Vec<String>) {
     let mut map = BTreeMap::new();
     for word in *words {
@@ -49,6 +50,7 @@ fn algorithm0(ref words: &Vec<String>) {
     }
 }
 
+// Second 18ms 83k words
 fn algorithm1(ref words: &Vec<String>) {
     let mut map = BTreeMap::new();
     for word in *words {
@@ -56,6 +58,7 @@ fn algorithm1(ref words: &Vec<String>) {
     }
 }
 
+// Faster 10ms 83k words
 fn algorithm2(ref words: &Vec<String>) {
     let mut map = HashMap::new();
     for word in *words {
